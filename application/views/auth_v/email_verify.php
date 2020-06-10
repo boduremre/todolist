@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Todo List - Şifremi Unuttum</title>
+    <title>Todo List - Eposta Doğrula</title>
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="<?php echo base_url('/index.php/password/send'); ?>" method="post" >
+                <form action="<?php echo base_url('/index.php/login/send_password'); ?>" method="post" >
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>

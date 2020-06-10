@@ -385,6 +385,7 @@ $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
 */
+
 $config['sess_driver']= 'database';
 $config['sess_cookie_name']= 'mycookie';
 $config['sess_expiration']= 7200;
@@ -499,8 +500,8 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
-date_default_timezone_set('Europe/Istanbul');
+$config['time_reference'] = 'Europe/Istanbul'; //'local';
+//date_default_timezone_set('Europe/Istanbul');
 
 /*
 |--------------------------------------------------------------------------

@@ -19,7 +19,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="609c3162-6e6f-4231-a11a-4c1c795c0898" name="Default Changelist" comment="" />
+    <list default="true" id="609c3162-6e6f-4231-a11a-4c1c795c0898" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/application/views/auth_v/email_verify.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/datatables/jquery.dataTables.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/popper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/popper.min.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/config/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/Todo.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Todo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/auth_v/forget_password.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/auth_v/forget_password.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/auth_v/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/auth_v/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/includes/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/includes/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/bootstrap-confirmation.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/bootstrap-confirmation.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/bootstrap.bundle.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/custom.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,11 +64,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1d8s3zukUgTree4kO7ASkxMhkQH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/application/views" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -82,6 +106,7 @@
       <workItem from="1556522482303" duration="869000" />
       <workItem from="1558118726107" duration="5673000" />
       <workItem from="1591817862712" duration="9315000" />
+      <workItem from="1591828009272" duration="1335000" />
     </task>
     <servers />
   </component>
@@ -98,6 +123,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="250" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1591822225280">

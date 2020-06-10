@@ -6,6 +6,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('user_agent');
+        $this->load->model('auth_model');
     }
 
     public function index()

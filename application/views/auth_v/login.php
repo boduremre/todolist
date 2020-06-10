@@ -55,7 +55,7 @@
                     Don't have an account?<a href="#">Sign Up</a>
                 </div> */ ?>
                 <div class="d-flex justify-content-center">
-                    <a href="<?php echo base_url('/index.php/forget_password'); ?>" style="color: #fff">Şifremi Unuttum!</a>
+                    <a href="<?php echo base_url('/index.php/password/reset'); ?>" style="color: #fff">Şifremi Unuttum!</a>
                 </div>
             </div>
         </div>

@@ -55,8 +55,10 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'Auth';
 $route['logout'] = 'Auth/logout';
-$route['forget_password'] = 'Auth/forget_password';
-$route['send_password'] = 'Auth/send_password';
+$route['password/reset'] = 'Auth/forget_password';
+$route['password/send'] = 'Auth/send_password';
+$route['email/verify'] = 'Auth/send_password';
+$route['email/send'] = 'Auth/send_password';
 $route['profile'] = 'Auth/profile';
 $route['profile/update'] = 'Auth/update';
 $route['settings'] = 'Todo/settings';

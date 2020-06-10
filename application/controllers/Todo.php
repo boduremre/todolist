@@ -11,7 +11,7 @@ class Todo extends CI_Controller
         if (!get_logged_user())
             redirect(base_url("index.php/login"));
 
-
+        $this->load->model('todo_model');
     }
 
     public function index()
