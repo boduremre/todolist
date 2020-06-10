@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="profilform" action="<?php echo base_url(); ?>index.php/login/update" method="post">
+                <form id="profilform" action="<?php echo base_url(); ?>index.php/auth/update" method="post">
                     <div class="form-group row">
                         <label for="txtUsername" class="col-sm-4 col-form-label">Kullanıcı Adı</label>
                         <div class="col-sm-8">

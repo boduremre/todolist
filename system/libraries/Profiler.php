@@ -166,7 +166,7 @@ class CI_Profiler {
 			}
 		}
 
-		// Build a table containing the profile data.
+		// Build a table containing the profile_v data.
 		// Note: At some point we should turn this into a template that can
 		// be modified. We also might want to make this data available to be logged
 

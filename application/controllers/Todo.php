@@ -53,14 +53,14 @@ class Todo extends CI_Controller
         ));
     }
 
-    public function dashboard()
+    public function settings()
     {
-        $this->load->model("dashboard_model");
+        $this->load->model("settings_model");
         $viewData = array(
-            "items" => $this->dashboard_model->getLoginLog($this->session->userdata('id'))
+            "items" => $this->settings_model->getLoginLog($this->session->userdata('id'))
         );
 
-        $this->load->view('dashboard', $viewData);
+        $this->load->view('settings', $viewData);
     }
 
 }

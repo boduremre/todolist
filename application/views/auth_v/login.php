@@ -5,8 +5,6 @@
     <!--Made with love by Mutiullah Samim -->
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
 
     <!--Bootsrap 4 CDN-->
@@ -17,6 +15,7 @@
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/'); ?>theme.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/'); ?>iziToast.min.css">
 </head>
 <body>
 <div class="container">
@@ -29,7 +28,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="<?php echo base_url('/index.php/login/dologin'); ?>" method="post" >
+                <?php echo form_open(base_url( '/index.php/auth/dologin' ));?>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -49,18 +48,22 @@
                     <div class="form-group">
                         <input type="submit" value="Giriş" class="btn float-right login_btn">
                     </div>
-                </form>
+                    <?php echo form_close();?>
             </div>
             <div class="card-footer">
                 <?php  /* <div class="d-flex justify-content-center links">
                     Don't have an account?<a href="#">Sign Up</a>
                 </div> */ ?>
                 <div class="d-flex justify-content-center">
-                    <a href="<?php echo base_url('/index.php/login/forget_password'); ?>" style="color: #fff">Şifremi Unuttum!</a>
+                    <a href="<?php echo base_url('/index.php/forget_password'); ?>" style="color: #fff">Şifremi Unuttum!</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/iziToast.min.js'); ?>"></script>
+<?php $this->load->view("includes/alert"); ?>
 </body>
 </html>

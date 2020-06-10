@@ -1,6 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login_model extends CI_Model
+class Auth_model extends CI_Model
 {
 
     public function login($data)
@@ -16,12 +16,19 @@ class Login_model extends CI_Model
             return array();
     }
 
+    public function getUserByID($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->where('isActive', 1);
+        return $this->db->get('users')->row();
+    }
+
     public function insert($data = array())
     {
         return $this->db->insert('user_login_log', $data);
     }
-	
-	public function update($id, $data)
+
+    public function update($id, $data)
     {
         return $this->db->where("id", $id)->update("users", $data);
     }

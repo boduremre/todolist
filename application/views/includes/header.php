@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?php echo base_url('/assets/css/switchery.min.css'); ?>"/>
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url('/assets/css/iziToast.min.css'); ?>"/>
     <link rel="stylesheet" href="<?php echo base_url('/assets/css/style.css'); ?>"/>
 	<style>
 		@media (max-width: @screen-xs) {

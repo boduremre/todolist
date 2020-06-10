@@ -8,12 +8,9 @@
     <!--========== END NAVBAR -->
     <br>
     <!-- START CONTENT ==========-->
-    <?php $this->load->view("dashboard_v/content"); ?>
+    <?php $this->load->view("profile_v/content"); ?>
     <!--========== END CONTENT -->
 </div>
-<!-- START MODAL ==========-->
-<?php $this->load->view("includes/modal"); ?>
-<!--========== END MODAL -->
 <!-- START scripts ==========-->
 <?php $this->load->view("includes/footer"); ?>
 <!--========== END scripts -->

@@ -52,3 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Todo';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['login'] = 'Auth';
+$route['logout'] = 'Auth/logout';
+$route['forget_password'] = 'Auth/forget_password';
+$route['send_password'] = 'Auth/send_password';
+$route['profile'] = 'Auth/profile';
+$route['profile/update'] = 'Auth/update';
+$route['settings'] = 'Todo/settings';

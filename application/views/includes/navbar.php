@@ -28,10 +28,9 @@
                     (<?php echo $this->session->userdata('username'); ?>)
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-backdrop="static"
-                       data-target="#profilModal">Profil Bilgileri</a>
-                    <a class="dropdown-item" href="<?php echo base_url('/index.php/todo/dashboard'); ?>">Ayarlar</a>
-                    <a class="dropdown-item" href="<?php echo base_url('/index.php/login/logout'); ?>">Çıkış</a>
+                    <a class="dropdown-item" href="<?php echo base_url('/index.php/profile'); ?>" >Profil Bilgileri</a>
+                    <a class="dropdown-item" href="<?php echo base_url('/index.php/settings'); ?>">Ayarlar</a>
+                    <a class="dropdown-item" href="<?php echo base_url('/index.php/logout'); ?>">Çıkış</a>
                 </div>
             </li>
             <!--                <li class="nav-item">-->

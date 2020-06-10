@@ -6,7 +6,7 @@
  * Time: 00:20
  */
 
-class Dashboard_model extends CI_Model
+class Settings_model extends CI_Model
 {
     public function __construct()
     {
