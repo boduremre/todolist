@@ -58,15 +58,3 @@ $(function () {
 
     });
 });
-
-function deleterecord(id) {
-    var content = id + " id numaralı kayıt başarılı bir şekilde silindi.";
-    var url = $('#deleteurl').data("url");
-    $.post(url, {"id": id}, function (response) {
-        iziToast.success({
-            title: 'İşlem Başarılı',
-            message: content,
-            position: "topCenter"
-        })
-    });
-}
