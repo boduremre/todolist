@@ -2,7 +2,6 @@
 <script src="<?php echo base_url('/assets/js/popper.min.js'); ?>"></script>
 <script src="<?php echo base_url('/assets/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('/assets/js/switchery.min.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/js/bootstrap-confirmation.min.js'); ?>"></script>
 <script src="<?php echo base_url('/assets/js/datatables/jquery.dataTables.min.js'); ?>"></script>
 <!--<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>

@@ -13,7 +13,7 @@ class Todo_model extends CI_Model
         parent::__construct();
     }
 
-    public $tableName = "todo";
+    public $tableName = "todos";
 
     public function get_all()
     {

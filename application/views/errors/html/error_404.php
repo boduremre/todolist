@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/animate.min.css">
-    <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/core.css">
     <link rel="stylesheet" href="<?php echo config_item('base_url'); ?>assets/css/misc-pages.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
@@ -31,7 +31,7 @@
     <h1 id="_404_title" class="animated shake">404</h1>
     <h5 id="_404_msg" class="animated slideInUp">Hata! Bir hata oluştu. Sayfa bulunamadı</h5>
     <div id="_404_form" class="animated slideInUp">
-        <a href="<?php echo config_item('base_url'); ?>" class="btn btn-default" style="width: 100%;">
+        <a href="<?php echo config_item('base_url'); ?>" class="btn btn-primary" style="width: 100%;">
             <i class="fa fa-home animated zoomIn"></i>&nbsp;Anasayfa
         </a>
     </div>

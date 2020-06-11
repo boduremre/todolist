@@ -4,7 +4,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
     <title>Todo List - Eposta Doğrula</title>
     <!--Made with love by Mutiullah Samim -->
@@ -23,32 +23,23 @@
     <div class="d-flex justify-content-center h-100">
         <div class="card" style="height:250px;">
             <div class="card-header">
-                <h3>Şifremi Unuttum</h3>
+                <h3>Eposta Adresi Doğrula</h3>
                 <div class="d-flex justify-content-end social_icon">
                     <span><i class="fab fa-wpforms"></i></span>
                 </div>
             </div>
             <div class="card-body">
-                <form action="<?php echo base_url('/index.php/login/send_password'); ?>" method="post" >
+				<?php echo form_open(base_url('/index.php/email/send')); ?>                
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         </div>
-                        <input name="username" type="text" class="form-control" placeholder="kullanıcı adı">
+                        <input name="email" type="email" class="form-control" placeholder="e-posta adresi">
                     </div>
-<!--                    <div class="input-group form-group">-->
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text"><i class="fas fa-key"></i></span>-->
-<!--                        </div>-->
-<!--                        <input name="password" type="password" class="form-control" placeholder="şifre">-->
-<!--                    </div>-->
-                    <!--                    <div class="row align-items-center remember">-->
-                    <!--                        <input name="rememberme" type="checkbox">Beni Hatırla-->
-                    <!--                    </div>-->
                     <div class="form-group">
                         <input type="submit" value="Gönder" class="btn float-right login_btn">
                     </div>
-                </form>
+                <?php echo form_close(); ?>
             </div>
             <div class="card-footer">
                 <?php  /* <div class="d-flex justify-content-center links">

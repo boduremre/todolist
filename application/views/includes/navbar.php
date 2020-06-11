@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="<?php echo base_url(); ?>">
         <img src="<?php echo base_url('/assets/img/logo1.png'); ?>" alt="TODO LIST"
              style="width: 128px; height: auto;">

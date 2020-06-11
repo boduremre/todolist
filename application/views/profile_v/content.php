@@ -19,10 +19,23 @@
                         <input class="form-control" name="surname" type="text" value="<?php echo $user->surname; ?>">
                     </div>
                 </div>
-                <div class="form-group row">
+				
+                <div class="form-group row">				
                     <label class="col-lg-3 col-form-label form-control-label">Eposta</label>
                     <div class="col-lg-9">
-                        <input class="form-control" name="email" type="email" value="<?php echo $user->email; ?>">
+					 <div class="input-group">
+						<input class="form-control" name="email" type="email" value="<?php echo $user->email; ?>">
+						<div class="input-group-append">
+						  <div class="input-group-text">
+						  <?php 
+							if($user->emailConfirmed)
+							  echo '<i class="fa fa-check-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eposta adresi doğrulandı."></i>';
+							else
+							  echo '<a href="'.base_url().'index.php/email"<i class="fa fa-times" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eposta adresi doğrulanmadı. Doğrulamak için tıklayınız."></i></a>';
+						  ?>
+						  </div>
+						</div> 
+					  </div>                     
                     </div>
                 </div>
                 <div class="form-group row">
@@ -34,7 +47,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Aktif Mi?</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-3">
                         <div class="form-check">
                             <?php
                             if ($user->isActive) {
@@ -43,6 +56,21 @@
                             } else {
                                 echo '<input type="checkbox" class="form-check-input disabled" id="isActive" disabled>';
                                 echo '<label class="form-check-label" for="isActive">Hayır</label>';
+                            } ?>
+
+                        </div>
+                    </div>
+					
+					 <label class="col-lg-3 col-form-label form-control-label">Yönetici Mi?</label>
+                    <div class="col-lg-3">
+                        <div class="form-check">
+                            <?php
+                            if ($user->isAdmin) {
+                                echo '<input type="checkbox" class="form-check-input disabled" id="isAdmin" checked disabled>';
+                                echo '<label class="form-check-label" for="isAdmin">Evet</label>';
+                            } else {
+                                echo '<input type="checkbox" class="form-check-input disabled" id="isAdmin" disabled>';
+                                echo '<label class="form-check-label" for="isAdmin">Hayır</label>';
                             } ?>
 
                         </div>
@@ -70,8 +98,10 @@
                 <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
-                        <a href="<?php base_url(); ?>todo" class="btn btn-secondary">İptal</a>
-                        <input type="submit" class="btn btn-primary" value="Güncelle">
+                        <button type="submit" class="btn btn-primary">
+						    <i class="fa fa-save"></i> Güncelle
+						</button>
+						<a href="<?php base_url(); ?>todo" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> İptal</a>
                     </div>
                 </div>
                 <?php echo form_close(); ?>

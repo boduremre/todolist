@@ -22,15 +22,33 @@ class Auth_model extends CI_Model
         $this->db->where('isActive', 1);
         return $this->db->get('users')->row();
     }
+	
+	public function getUserList()
+    {
+        return $this->db->get('users')->result();
+    }
 
     public function insert($data = array())
     {
-        return $this->db->insert('user_login_log', $data);
+        return $this->db->insert('authentication_logs', $data);
     }
 
     public function update($id, $data)
     {
         return $this->db->where("id", $id)->update("users", $data);
+    }
+	
+	 
+    function verifyEmail($email){
+        $data = array('emailConfirmed' => 1);
+        $this->db->where('email', $email);
+        return $this->db->update('users', $data);
+    }
+	
+	function setUserActive($id, $status){
+        $data = array('isActive' => $status);
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
     }
 }
 

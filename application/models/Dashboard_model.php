@@ -6,21 +6,20 @@
  * Time: 00:20
  */
 
-class Settings_model extends CI_Model
+class Dashboard_model extends CI_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    private $tableName = "authentication_logs";
+    private $tableName = "authentication_log";
 
     public function getLoginLog($id)
-    {        
+    {
+        // $this->db->order_by("isActive","desc");
         $this->db->order_by("date","desc");
-        $this->db->where('userID', $id);
-		$this->db->where('status', 1);
-		$this->db->limit('10');
+        $this->db->where('userid', $id);
         return $this->db->get($this->tableName)->result();
     }
 }

@@ -6,7 +6,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('user_agent');
-        $this->load->model('auth_model');
+        $this->load->model('auth_model');		
     }
 
     public function index()
@@ -120,6 +120,7 @@ class Auth extends CI_Controller
                     'username' => $this->input->post('username'),
                     'name' => $result[0]['name'],
                     'surname' => $result[0]['surname'],
+                    'isAdmin' => $result[0]['isAdmin'],
                     'is_logged_in' => TRUE
                 );
 
@@ -142,7 +143,7 @@ class Auth extends CI_Controller
             } else {
                 $alert = array(
                     "title" => "Giriş İşlemi Başarısız",
-                    "text" => "Kullanıcı Adı veya Parola Hatalı",
+                    "text" => "Kullanıcı Adı veya Parola Hatalı veya Üyeliğiniz Aktif Değil!",
                     "type" => "error"
                 );
 
@@ -169,9 +170,129 @@ class Auth extends CI_Controller
             "geo_loc" => $ip2loc['city'] . ', ' . $ip2loc['region'] . ', ' . $ip2loc['country'] //ilçe, il ve ülke
         ));
 
-        $this->session->unset_userdata(array('id', 'username', 'name', 'surname', 'is_logged_in'));
+        $this->session->unset_userdata(array('id', 'username', 'name', 'surname', 'is_logged_in', 'isAdmin'));
         $this->session->sess_destroy();
 
         redirect(base_url('/index.php/login'));
+    }
+	
+	   public function emailVerifyView()
+    {
+        if (!get_logged_user())
+            redirect(base_url('login'));
+
+        $this->load->view('auth_v/email_verify');
+    }
+	
+	//send confirm mail
+    public function sendEmail()
+	{
+        $from = "noreply@emrebodur.com";    //senders email address
+        $subject = 'E-posta Adresini Doğrulayın';  //email subject
+        $receiver = $this->input->post('email', TRUE); //user email adres
+		
+        //sending confirmEmail($receiver) function calling link to the user, inside message body
+        $message = 'Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br>
+        <a href=\'http://localhost:8080/todolist/email/verify/'.base64_encode($receiver).'\'>http://localhost:8080/todolist/email/verify/'. base64_encode($receiver) .'</a><br><br>Teşekkürler.';       
+        
+        //config email settings
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'smtp.emrebodur.com';
+        $config['smtp_port'] = '587';
+        $config['smtp_user'] = $from;
+        $config['smtp_pass'] = 'Qx83cmAh';  //sender's password
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = 'TRUE';
+        $config['newline'] = "\r\n"; 
+        
+        $this->load->library('email', $config);
+		$this->email->initialize($config);
+		
+        //send email
+        $this->email->from($from);
+        $this->email->to($receiver);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        
+        if($this->email->send()){
+			/*for testing
+            echo "sent to: ".$receiver."<br>";
+			echo "from: ".$from. "<br>";
+			echo "protocol: ". $config['protocol']."<br>";
+			echo "message: ".$message;
+            return true; */
+			
+			$alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Doğrulama linki e-posta adresinize gönderildi.",
+                    "type" => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('todo');
+        }else {
+            //echo "email send failed";
+            //return false;
+			$alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Doğrulama E-postası gönderilemedi!",
+                    "type" => "error"
+                );
+			
+			$this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }
+    }
+	
+	function confirmEmail($email){		
+        if($this->auth_model->verifyEmail(base64_decode($email))){
+			$alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "E-posta adresiniz onaylandı.",
+                    "type" => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('todo');
+        }else{
+            $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Doğrulama E-postası gönderilemedi!",
+                    "type" => "error"
+                );
+			
+			$this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }
+    }
+	
+	function setUserActive($id, $status){		
+        if($this->auth_model->setUserActive($id, $status)){
+			$alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kullanıcı aktif/deaktif edildi!",
+                    "type" => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('settings');
+        }else{
+            $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kullanıcı aktif/deaktif edilemedi!",
+                    "type" => "error"
+                );
+			
+			$this->session->set_flashdata("alert", $alert);
+            redirect('settings');
+        }
+    }
+	
+	  public function logs($id)
+    {		
+        $this->load->model("settings_model");        
+		$result = $this->settings_model->getLoginLog($id);
+		echo json_encode($result);        
     }
 }

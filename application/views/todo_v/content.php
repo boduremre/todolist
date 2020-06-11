@@ -18,15 +18,16 @@
                 <tr>
                     <th scope="col">Açıklama</th>
                     <th scope="col">Tarih</th>
-                    <th scope="col">Durum</th>
-                    <!--<th scope="col">İşlemler</th>-->
+                    <th scope="col">Durum</th>                    
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($items as $item) { ?>
-                    <tr data-gorev-id="<?php echo $item->id; ?>">
-                        <td><?php if ($item->isActive == 0) echo "<strike>" . $item->aciklama . "</strike>"; else echo $item->aciklama; ?></td>
-                        <td>
+                    <tr>
+                        <td style="width: 70%">
+							<div><?php if ($item->isActive == 0) echo "<strike>" . $item->aciklama . "</strike>"; else echo $item->aciklama; ?>							
+						</td>
+                        <td style="width: 20%">
                             <?php echo ' <span class="badge badge-primary"><small>' . date("d-m-Y H:i:s", strtotime($item->createdDate)) . '</small></span>'; ?>
                             <?php
                             if ($item->completedDate != "0000-00-00 00:00:00") {
@@ -37,14 +38,17 @@
                             ?>
                         </td>
                         <td style="width: 10%">
-                            <?php if ($item->isActive == 1) { ?>
-                                <input data-url="<?php echo base_url("/index.php/todo/isCompletedSetter/$item->id"); ?>"
-                                       type="checkbox" class="js-switch" checked/>
+                            <?php if ($item->isActive == 0) { ?>
+								<a data-toggle="tooltip" title="Tamamlandı" href="<?php echo base_url("/index.php/complete/$item->id"); ?>" class="btn btn-sm btn-success disabled" disabled>
+									<i class="fa fa-check-circle"></i>
+								</a>
                             <?php } else { ?>
-                                <input data-url="<?php echo base_url("/index.php/todo/isCompletedSetter/$item->id"); ?>"
-                                       type="checkbox" class="js-switch" disabled/>
+                                <a data-toggle="tooltip" title="Tamamlandı olarak işaretle" href="<?php echo base_url("/index.php/complete/$item->id"); ?>" class="btn btn-sm btn-primary">
+									<i class="fa fa-check-circle"></i>
+								</a>
                             <?php } ?>
-                        </td>
+							<a data-toggle="tooltip" title="Sil" href="<?php echo base_url("/index.php/delete/$item->id"); ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        </td>						
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -52,4 +56,3 @@
         </div>
     </div>
 </div>
-<div style="display:none;" id="deleteurl" data-url='<?php echo base_url("/index.php/todo/delete/$item->id"); ?>'></div>

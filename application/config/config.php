@@ -500,8 +500,8 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'Europe/Istanbul'; //'local';
-//date_default_timezone_set('Europe/Istanbul');
+$config['time_reference'] = 'local'; //'local';
+date_default_timezone_set('Europe/Istanbul');
 
 /*
 |--------------------------------------------------------------------------

@@ -32,9 +32,9 @@
                 <form action="<?php echo base_url('/index.php/password/send'); ?>" method="post" >
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         </div>
-                        <input name="username" type="text" class="form-control" placeholder="kullanıcı adı">
+                        <input name="email" type="email" class="form-control" placeholder="e-posta adresiniz" autocomplete="off" required />
                     </div>
 <!--                    <div class="input-group form-group">-->
 <!--                        <div class="input-group-prepend">-->
@@ -55,7 +55,7 @@
                     Don't have an account?<a href="#">Sign Up</a>
                 </div> */ ?>
                 <div class="d-flex justify-content-center">
-                    <a href="<?php echo base_url('/index.php/login'); ?>" style="color: #fff">Giriş</a>
+                    <a href="<?php echo base_url('/index.php/login'); ?>" style="color: #fff"><b>Giriş</b></a>
                 </div>
             </div>
         </div>

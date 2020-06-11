@@ -37,27 +37,64 @@ class Todo extends CI_Controller
         redirect(base_url());
     }
 
-    public function delete()
-    {
-        $id = $this->input->post("id");
-        $this->todo_model->delete($id);
+    public function delete($id)
+    {        
+		if($this->todo_model->delete($id)){
+			$alert = array(
+                "title" => "İşlem Başarılı",
+                "text" => "Görev başarılı bir şekilde silindi.",
+                "type" => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }else {
+			$alert = array(
+				"title" => "İşlem Başarısız",
+                "text" => "Silme işlemi başarısız!",
+                "type" => "error"
+            );
+			
+			$this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }
     }
 
     public function isCompletedSetter($id)
     {
-        $completed = ($this->input->post("completed") == "true") ? 1 : 0;
-
-        $this->todo_model->update($id, array(
-            "isActive" => $completed,
+		$data = array(
+            "isActive" => 0,
             "completedDate" => date("Y-m-d H:i:s")
-        ));
+        );
+		
+		if($this->todo_model->update($id, $data)){
+			$alert = array(
+                "title" => "İşlem Başarılı",
+                "text" => "Görev tamamlandı olarak işaretlendi.",
+                "type" => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }else {
+			$alert = array(
+				"title" => "İşlem Başarısız",
+                "text" => "Görev tamamlandı olarak işaretlenemedi!",
+                "type" => "error"
+            );
+			
+			$this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        }
     }
 
     public function settings()
     {
         $this->load->model("settings_model");
+        $this->load->model("auth_model");
         $viewData = array(
-            "items" => $this->settings_model->getLoginLog($this->session->userdata('id'))
+            "items" => $this->settings_model->getLoginLog($this->session->userdata('id')),
+            "users" => $this->auth_model->getUserList()
         );
 
         $this->load->view('settings', $viewData);

@@ -2,8 +2,8 @@
 
 $(function () {
     //Tooltip açıldığında confimation çalışmıyor. Kapalı kalsın...
-    //$('[data-toggle="tooltip"]').tooltip();
-
+    $('[data-toggle="tooltip"]').tooltip();
+	
     //Datatable
     var table = $('#myTable').DataTable({
         "searching": false,
@@ -14,47 +14,47 @@ $(function () {
             "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Turkish.json"
         }
     });
-    /*
-        $('#logTable').DataTable( {
-            "searching": false,
-            "lengthChange": false,
-            "ordering": false,
-            "pageLength": $(this).data("pagelength"),
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Turkish.json"
-            }
-            //dom: 'Bfrtip',
-            /*buttons: [
-                  'excel', 'pdf'
-                //'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        } ); */
+	
+	$("#userlogs").hide();
+	$(".btn-getUserLogs").click(function(event) {
+			event.preventDefault();
+			
+			$("#userlogs").hide();
+			$("#spanUsername").empty('');
+            $("#userlogs tbody").empty();
+			
+            var id = $(this).data("user-id");
+            var username = $(this).data("username");
 
-    //Switchery
-    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    elems.forEach(function (html) {
-        var switchery = new Switchery(html, {color: '#dc3545', secondaryColor: '#64bd63'}); //size: 'small'
-    });
-
-    //Switchery checked/unchecked ile güncelleme
-    $("body").on("change", ".js-switch", function () {
-        var completed = $(this).prop("checked");
-        var url = $(this).data("url");
-
-        $.post(url, {"completed": completed}, function (response) {
-            showMessageWithTimerThenReload("Yapılacak iş yapıldı olarak işaretlendi!");
-        });
-    });
-
-    $('#myTable > tbody > tr').click(function () {
-        $('tr.rowmenu').remove();
-        var row_index = $(this).index();
-        $('tr.rowmenu').remove();
-
-        var islem_id = $('#myTable > tbody > tr').eq(row_index).data("gorev-id");
-
-        $('#myTable > tbody > tr').eq(row_index).after('<tr class="rowmenu"><td class="clearfix" colspan="5"><a href="javascript:deleterecord(' + islem_id + ')" class="btn btn-sm btn-danger" >Sil</a></td></tr>');
-
+            $.ajax(
+                {
+                    type:"GET",
+                    url: "user/logs/"+ id,
+					dataType:'JSON',
+                    success:function(response)
+                    {
+						$("#spanUsername").html(username);                        
+						$.each(response, function () {
+							$("#userlogs tbody").append("<tr>");
+							$("#userlogs tbody").append("<td>"+ this.date +"</td>");
+							$("#userlogs tbody").append("<td>"+ this.ip_address +"</td>");
+							$("#userlogs tbody").append("<td>"+ this.browser +"</td>");
+							$("#userlogs tbody").append("<td>"+ this.platform +"</td>");
+							$("#userlogs tbody").append("<td>"+ this.geo_loc +"</td>");
+							$("#userlogs tbody").append("</tr>");
+						});
+						
+                        $("#userlogs").show();
+                    },
+                    error: function() 
+                    {
+                        iziToast.error({
+					title: 'İşlem Başarısız!',
+					message: 'Bilinmeyen hata meydana geldi!',
+					position : "topCenter"
+				});
+                    }
+                }
+            );
     });
 });
