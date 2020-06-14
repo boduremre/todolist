@@ -300,12 +300,11 @@ class Auth extends CI_Controller
     public function sendEmail()
     {
         $from = "noreply@emrebodur.com";    //senders email address
-        $subject = 'E-posta Adresini Doğrulayın';  //email subject
-        $receiver = $this->input->post('email', TRUE); //user email adres
+        $subject = 'ToDo - E-posta Adresini Doğrulayın';  //email subject
+        $receiver = trim($this->input->post('email', TRUE)); //user email adres
 
         //sending confirmEmail($receiver) function calling link to the user, inside message body
-        $message = 'Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br>
-        <a href=\'http://localhost:8080/todolist/email/verify/' . base64_encode($receiver) . '\'>http://localhost:8080/todolist/email/verify/' . base64_encode($receiver) . '</a><br><br>Teşekkürler.';
+        $message = "Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br><a href='".base_url() ."index.php/email/verify/" . base64_encode($receiver) . "'>".base_url() ."index.php/email/verify/" . base64_encode($receiver) . "</a><br><br>Teşekkürler.";
 
         //config email settings
         $config['protocol'] = 'smtp';
