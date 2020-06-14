@@ -6,7 +6,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('user_agent');
-        $this->load->model('auth_model');		
+        $this->load->model('auth_model');
     }
 
     public function index()
@@ -25,12 +25,125 @@ class Auth extends CI_Controller
         $this->load->view('auth_v/forget_password');
     }
 
+    public function password_change()
+    {
+        if (get_logged_user())
+            redirect(base_url());
+
+        $viewData = new stdClass();
+        $viewData->email = base64_decode($this->uri->segment(3));
+        $viewData->token = $this->uri->segment(4);
+        $this->load->view('auth_v/password_change', $viewData);
+    }
+
+    public function password_change_save()
+    {
+        if (get_logged_user())
+            redirect(base_url("index.php/login"));
+
+        $this->load->library('form_validation');
+        $this->load->helper('security');
+
+        $this->form_validation->set_rules('token', 'Adı', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Şifre', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('confirm_password', 'Şifre (Tekrar)', 'trim|required|matches[password]|xss_clean');
+        $this->form_validation->set_rules('email', 'Eposta', 'trim|required|valid_email');
+
+        if ($this->form_validation->run() == FALSE) {
+            redirect('password/reset');
+        } else {
+            $data = array(
+                'token' => $this->input->post('username', TRUE),
+                'password' => md5($this->input->post('password', TRUE))
+            );
+
+            $result = $this->auth_model->password_change_save($this->input->post('email', TRUE), $data);
+            if ($result) {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Şifreniz başarıyla güncellendi!",
+                    "type" => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('login');
+            } else {
+                $alert = array(
+                    "title" => "Hata",
+                    "text" => "Şifre güncellenemedi!",
+                    "type" => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('login');;
+            }
+        }
+    }
+
     public function send_password()
     {
         if (get_logged_user())
             redirect(base_url());
 
-        $this->load->view('auth_v/forget_password');
+        $from = "noreply@emrebodur.com";    //senders email address
+        $subject = 'ToDo List - Şifre Sıfırlama';  //email subject
+        $receiver = $this->input->post('email', TRUE); //user email adres
+        $data = $this->auth_model->password_change($receiver);
+
+        if ($data) {
+
+            $message = 'Sayın ' . $data['name'] . ' ' . $data['surname'] . ' (' . $data['username'] . '),<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br><a href="' . base_url() . 'index.php/password/change/' . base64_encode($receiver) . '/' . $data['token'] . '">' . base_url() . 'index.php/password/change/' . base64_encode($receiver) . '/' . $data['token'] . '</a><br><br>Teşekkürler.';
+
+            //config email settings
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'smtp.emrebodur.com';
+            $config['smtp_port'] = '587';
+            $config['smtp_user'] = $from;
+            $config['smtp_pass'] = 'Qx83cmAh';  //sender's password
+            $config['mailtype'] = 'html';
+            $config['charset'] = 'utf-8';
+            $config['wordwrap'] = 'TRUE';
+            $config['newline'] = "\r\n";
+
+            $this->load->library('email', $config);
+            $this->email->initialize($config);
+
+            //send email
+            $this->email->from($from);
+            $this->email->to($receiver);
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            if ($this->email->send()) {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Şifre sıfırlama linki e-posta adresinize gönderildi.",
+                    "type" => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('login');
+            } else {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Şifre sıfırlama linki e-posta adresinize gönderilemedi!",
+                    "type" => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect('password/reset');
+            }
+        } else {
+            $alert = array(
+                "title" => "Hata",
+                "text" => "Girilen E-posta adresine ait bir kullanıcı bulunamadı!",
+                "type" => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('password/reset');
+        }
+
     }
 
     public function profile()
@@ -85,7 +198,6 @@ class Auth extends CI_Controller
                 $this->load->view('profile', $viewData);
             }
         }
-
     }
 
     public function dologin()
@@ -175,26 +287,26 @@ class Auth extends CI_Controller
 
         redirect(base_url('/index.php/login'));
     }
-	
-	   public function emailVerifyView()
+
+    public function emailVerifyView()
     {
         if (!get_logged_user())
             redirect(base_url('login'));
 
         $this->load->view('auth_v/email_verify');
     }
-	
-	//send confirm mail
+
+    //send confirm mail
     public function sendEmail()
-	{
+    {
         $from = "noreply@emrebodur.com";    //senders email address
         $subject = 'E-posta Adresini Doğrulayın';  //email subject
         $receiver = $this->input->post('email', TRUE); //user email adres
-		
+
         //sending confirmEmail($receiver) function calling link to the user, inside message body
         $message = 'Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br>
-        <a href=\'http://localhost:8080/todolist/email/verify/'.base64_encode($receiver).'\'>http://localhost:8080/todolist/email/verify/'. base64_encode($receiver) .'</a><br><br>Teşekkürler.';       
-        
+        <a href=\'http://localhost:8080/todolist/email/verify/' . base64_encode($receiver) . '\'>http://localhost:8080/todolist/email/verify/' . base64_encode($receiver) . '</a><br><br>Teşekkürler.';
+
         //config email settings
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.emrebodur.com';
@@ -204,95 +316,97 @@ class Auth extends CI_Controller
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['wordwrap'] = 'TRUE';
-        $config['newline'] = "\r\n"; 
-        
+        $config['newline'] = "\r\n";
+
         $this->load->library('email', $config);
-		$this->email->initialize($config);
-		
+        $this->email->initialize($config);
+
         //send email
         $this->email->from($from);
         $this->email->to($receiver);
         $this->email->subject($subject);
         $this->email->message($message);
-        
-        if($this->email->send()){
-			/*for testing
-            echo "sent to: ".$receiver."<br>";
-			echo "from: ".$from. "<br>";
-			echo "protocol: ". $config['protocol']."<br>";
-			echo "message: ".$message;
-            return true; */
-			
-			$alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Doğrulama linki e-posta adresinize gönderildi.",
-                    "type" => "success"
-                );
 
-                $this->session->set_flashdata("alert", $alert);
-                redirect('todo');
-        }else {
+        if ($this->email->send()) {
+            /*for testing
+            echo "sent to: ".$receiver."<br>";
+            echo "from: ".$from. "<br>";
+            echo "protocol: ". $config['protocol']."<br>";
+            echo "message: ".$message;
+            return true; */
+
+            $alert = array(
+                "title" => "İşlem Başarılı",
+                "text" => "Doğrulama linki e-posta adresinize gönderildi.",
+                "type" => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        } else {
             //echo "email send failed";
             //return false;
-			$alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Doğrulama E-postası gönderilemedi!",
-                    "type" => "error"
-                );
-			
-			$this->session->set_flashdata("alert", $alert);
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Doğrulama E-postası gönderilemedi!",
+                "type" => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect('todo');
         }
     }
-	
-	function confirmEmail($email){		
-        if($this->auth_model->verifyEmail(base64_decode($email))){
-			$alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "E-posta adresiniz onaylandı.",
-                    "type" => "success"
-                );
 
-                $this->session->set_flashdata("alert", $alert);
-                redirect('todo');
-        }else{
+    function confirmEmail($email)
+    {
+        if ($this->auth_model->verifyEmail(base64_decode($email))) {
             $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Doğrulama E-postası gönderilemedi!",
-                    "type" => "error"
-                );
-			
-			$this->session->set_flashdata("alert", $alert);
+                "title" => "İşlem Başarılı",
+                "text" => "E-posta adresiniz onaylandı.",
+                "type" => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('todo');
+        } else {
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Doğrulama E-postası gönderilemedi!",
+                "type" => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect('todo');
         }
     }
-	
-	function setUserActive($id, $status){		
-        if($this->auth_model->setUserActive($id, $status)){
-			$alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcı aktif/deaktif edildi!",
-                    "type" => "success"
-                );
 
-                $this->session->set_flashdata("alert", $alert);
-                redirect('settings');
-        }else{
+    function setUserActive($id, $status)
+    {
+        if ($this->auth_model->setUserActive($id, $status)) {
             $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcı aktif/deaktif edilemedi!",
-                    "type" => "error"
-                );
-			
-			$this->session->set_flashdata("alert", $alert);
+                "title" => "İşlem Başarılı",
+                "text" => "Kullanıcı aktif/deaktif edildi!",
+                "type" => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect('settings');
+        } else {
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Kullanıcı aktif/deaktif edilemedi!",
+                "type" => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect('settings');
         }
     }
-	
-	  public function logs($id)
-    {		
-        $this->load->model("settings_model");        
-		$result = $this->settings_model->getLoginLog($id);
-		echo json_encode($result);        
+
+    public function logs($id)
+    {
+        $this->load->model("settings_model");
+        $result = $this->settings_model->getLoginLog($id);
+        echo json_encode($result);
     }
 }

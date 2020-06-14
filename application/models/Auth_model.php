@@ -22,8 +22,8 @@ class Auth_model extends CI_Model
         $this->db->where('isActive', 1);
         return $this->db->get('users')->row();
     }
-	
-	public function getUserList()
+
+    public function getUserList()
     {
         return $this->db->get('users')->result();
     }
@@ -37,19 +37,39 @@ class Auth_model extends CI_Model
     {
         return $this->db->where("id", $id)->update("users", $data);
     }
-	
-	 
-    function verifyEmail($email){
+
+    function verifyEmail($email)
+    {
         $data = array('emailConfirmed' => 1);
         $this->db->where('email', $email);
         return $this->db->update('users', $data);
     }
-	
-	function setUserActive($id, $status){
+
+    function setUserActive($id, $status)
+    {
         $data = array('isActive' => $status);
         $this->db->where('id', $id);
         return $this->db->update('users', $data);
     }
-}
 
-?>
+    public function password_change($user_email)
+    {
+        $this->db->select('email, name, surname, username, token');
+        $this->db->where('email', $user_email);
+        $query = $this->db->get('users');
+
+        if ($query->row_array() > 0) {
+            $data['token'] = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 50);;
+            $this->db->where('email', $user_email);
+            $this->db->update('users', $data);
+            return $query->row_array();
+        }
+
+        return false;
+    }
+
+    public function password_change_save($email, $data)
+    {
+        return $this->db->where("email", $email)->update("users", $data);
+    }
+}
