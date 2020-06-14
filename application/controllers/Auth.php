@@ -253,14 +253,7 @@ class Auth extends CI_Controller
 
                 redirect(base_url('/index.php/todo'));
             } else {
-                $alert = array(
-                    "title" => "Giriş İşlemi Başarısız",
-                    "text" => "Kullanıcı Adı veya Parola Hatalı veya Üyeliğiniz Aktif Değil!",
-                    "type" => "error"
-                );
-
-                $this->session->set_flashdata("alert", $alert);
-                $this->load->view('auth_v/login');
+                toastMessageWithRedirectURI("Giriş İşlemi Başarısız", "Kullanıcı Adı veya Parola Hatalı veya Üyeliğiniz Aktif Değil!", "login", "error");
             }
         }
     }
@@ -304,7 +297,7 @@ class Auth extends CI_Controller
         $receiver = trim($this->input->post('email', TRUE)); //user email adres
 
         //sending confirmEmail($receiver) function calling link to the user, inside message body
-        $message = "Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br><a href='".base_url() ."index.php/email/verify/" . base64_encode($receiver) . "'>".base_url() ."index.php/email/verify/" . base64_encode($receiver) . "</a><br><br>Teşekkürler.";
+        $message = "Sevgili Kullanıcı,<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br><a href='" . base_url() . "index.php/email/verify/" . base64_encode($receiver) . "'>" . base_url() . "index.php/email/verify/" . base64_encode($receiver) . "</a><br><br>Teşekkürler.";
 
         //config email settings
         $config['protocol'] = 'smtp';
@@ -327,21 +320,7 @@ class Auth extends CI_Controller
         $this->email->message($message);
 
         if ($this->email->send()) {
-            /*for testing
-            echo "sent to: ".$receiver."<br>";
-            echo "from: ".$from. "<br>";
-            echo "protocol: ". $config['protocol']."<br>";
-            echo "message: ".$message;
-            return true; */
-
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Doğrulama linki e-posta adresinize gönderildi.",
-                "type" => "success"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('todo');
+            toastMessageWithRedirectURI("İşlem Başarılı", "Doğrulama linki e-posta adresinize gönderildi.", "todo");
         } else {
             //echo "email send failed";
             //return false;

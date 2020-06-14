@@ -11,7 +11,8 @@ function get_logged_user()
 }
 
 // https://stackoverflow.com/questions/28012011/how-to-obtain-location-from-ipinfo-io-in-php
-function getClientIP(){
+function getClientIP()
+{
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -22,10 +23,31 @@ function getClientIP(){
     return $ip;
 }
 
-function ip_details($ip) {
+function ip_details($ip)
+{
     $json = file_get_contents("https://ipinfo.io/{$ip}/geo");
     $details = json_decode($json, true);
     return $details;
+}
+
+/**
+ * @param string $title
+ * @param string $text
+ * @param $redirectURL
+ * @param string $type
+ */
+function toastMessageWithRedirectURI($title = "İşlem Başarılı", $text = "Mesaj", $redirectURL, $type = "success")
+{
+    $alert = array(
+        "title" => $title,
+        "text" => $text,
+        "type" => $type
+    );
+
+    $t = &get_instance();
+    $t->session->set_flashdata("alert", $alert);
+
+    redirect($redirectURL);
 }
 
 ?>
