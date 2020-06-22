@@ -11,6 +11,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>-->
 <script src="<?php echo base_url('/assets/js/iziToast.min.js'); ?>"></script>
+<script src="<?php echo base_url('/assets/js/bootstrap-confirmation.min.js'); ?>"></script>
 <script src="<?php echo base_url('/assets/js/custom.js'); ?>"></script>
 <?php $this->load->view("includes/alert"); ?>
 </body>

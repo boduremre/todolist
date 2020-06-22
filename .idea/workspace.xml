@@ -20,9 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="609c3162-6e6f-4231-a11a-4c1c795c0898" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/css/switchery.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/switchery.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/bootstrap-confirmation.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/bootstrap-confirmation.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/switchery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/switchery.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/helpers/tools_helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/helpers/tools_helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/includes/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/includes/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/todo_v/content.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/todo_v/content.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/custom.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,22 +70,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/application/views/auth_v" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/css" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\todolist\application\views\auth_v" />
-      <recent name="C:\xampp\htdocs\todolist\application\views" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\todolist\assets\css" />
       <recent name="C:\xampp\htdocs\todolist\assets\js" />
-      <recent name="C:\xampp\htdocs\todolist\application\views\includes" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\todolist\application\views\profile_v" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\todolist\assets\css" />
+      <recent name="C:\xampp\htdocs\todolist\assets\js" />
+      <recent name="C:\xampp\htdocs\todolist\assets" />
+      <recent name="C:\xampp\htdocs\todolist\application\views\auth_v" />
+      <recent name="C:\xampp\htdocs\todolist\application\views" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -94,7 +104,9 @@
       <workItem from="1558118726107" duration="5673000" />
       <workItem from="1591817862712" duration="9315000" />
       <workItem from="1591828009272" duration="1760000" />
-      <workItem from="1592129839380" duration="6314000" />
+      <workItem from="1592129839380" duration="7096000" />
+      <workItem from="1592478666905" duration="306000" />
+      <workItem from="1592859992982" duration="2472000" />
     </task>
     <servers />
   </component>

@@ -47,7 +47,19 @@
 									<i class="fa fa-check-circle"></i>
 								</a>
                             <?php } ?>
-							<a data-toggle="tooltip" title="Sil" href="<?php echo base_url("/index.php/delete/$item->id"); ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+							<a data-toggle="confirmation"
+                               data-placement="left"
+                               data-singleton="true"
+                               title="Silmek istiyor musunuz?"
+                               data-btn-cancel-label="Hayır"
+                               data-btn-cancel-class="btn btn-sm btn-success"
+                               data-btn-ok-label="Evet"
+                               data-btn-ok-class="btn btn-sm btn-danger"
+                               data-content="Bu işlem geri alınamaz!"
+                               href="<?php echo base_url("/index.php/delete/$item->id"); ?>"
+                               class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>						
                     </tr>
                 <?php } ?>

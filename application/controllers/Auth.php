@@ -58,25 +58,11 @@ class Auth extends CI_Controller
             );
 
             $result = $this->auth_model->password_change_save($this->input->post('email', TRUE), $data);
-            if ($result) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Şifreniz başarıyla güncellendi!",
-                    "type" => "success"
-                );
 
-                $this->session->set_flashdata("alert", $alert);
-                redirect('login');
-            } else {
-                $alert = array(
-                    "title" => "Hata",
-                    "text" => "Şifre güncellenemedi!",
-                    "type" => "error"
-                );
-
-                $this->session->set_flashdata("alert", $alert);
-                redirect('login');;
-            }
+            if ($result)
+                toastMessageWithRedirectURI("İşlem Başarılı", "Şifreniz başarıyla güncellendi!", "login");
+            else
+                toastMessageWithRedirectURI("İşlem Başarısız", "Şifre güncellenemedi!", "login", "error");
         }
     }
 
@@ -91,7 +77,6 @@ class Auth extends CI_Controller
         $data = $this->auth_model->password_change($receiver);
 
         if ($data) {
-
             $message = 'Sayın ' . $data['name'] . ' ' . $data['surname'] . ' (' . $data['username'] . '),<br><br> E-posta adresinizi doğrulamak için lütfen aşağıdaki etkinleştirme bağlantısını tıklayın.<br><br><a href="' . base_url() . 'index.php/password/change/' . base64_encode($receiver) . '/' . $data['token'] . '">' . base_url() . 'index.php/password/change/' . base64_encode($receiver) . '/' . $data['token'] . '</a><br><br>Teşekkürler.';
 
             //config email settings
@@ -115,35 +100,13 @@ class Auth extends CI_Controller
             $this->email->message($message);
 
             if ($this->email->send()) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Şifre sıfırlama linki e-posta adresinize gönderildi.",
-                    "type" => "success"
-                );
-
-                $this->session->set_flashdata("alert", $alert);
-                redirect('login');
+                toastMessageWithRedirectURI("İşlem Başarılı", "Şifre sıfırlama linki e-posta adresinize gönderildi.", "login");
             } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Şifre sıfırlama linki e-posta adresinize gönderilemedi!",
-                    "type" => "error"
-                );
-
-                $this->session->set_flashdata("alert", $alert);
-                redirect('password/reset');
+                toastMessageWithRedirectURI("İşlem Başarısız", "Şifre sıfırlama linki e-posta adresinize gönderilemedi!", "password/reset", "error");
             }
         } else {
-            $alert = array(
-                "title" => "Hata",
-                "text" => "Girilen E-posta adresine ait bir kullanıcı bulunamadı!",
-                "type" => "error"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('password/reset');
+            toastMessageWithRedirectURI("Hata", "Girilen E-posta adresine ait bir kullanıcı bulunamadı!", "password/reset", "error");
         }
-
     }
 
     public function profile()
@@ -152,8 +115,7 @@ class Auth extends CI_Controller
             redirect(base_url("index.php/login"));
 
         $viewData = new stdClass();
-        $userID = $this->session->userdata('id');
-        $viewData->user = $this->auth_model->getUserByID($userID);
+        $viewData->user = $this->auth_model->getUserByID($this->session->userdata('id'));
         $this->load->view('profile', $viewData);
     }
 
@@ -322,62 +284,25 @@ class Auth extends CI_Controller
         if ($this->email->send()) {
             toastMessageWithRedirectURI("İşlem Başarılı", "Doğrulama linki e-posta adresinize gönderildi.", "todo");
         } else {
-            //echo "email send failed";
-            //return false;
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Doğrulama E-postası gönderilemedi!",
-                "type" => "error"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('todo');
+            toastMessageWithRedirectURI("İşlem Başarısız", "Doğrulama E-postası gönderilemedi!", "todo", "error");
         }
     }
 
     function confirmEmail($email)
     {
         if ($this->auth_model->verifyEmail(base64_decode($email))) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "E-posta adresiniz onaylandı.",
-                "type" => "success"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('todo');
+            toastMessageWithRedirectURI("İşlem Başarılı", "E-posta adresiniz onaylandı.", "todo");
         } else {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Doğrulama E-postası gönderilemedi!",
-                "type" => "error"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('todo');
+            toastMessageWithRedirectURI("İşlem Başarısız", "Doğrulama E-postası gönderilemedi!", "todo", "error");
         }
     }
 
     function setUserActive($id, $status)
     {
         if ($this->auth_model->setUserActive($id, $status)) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kullanıcı aktif/deaktif edildi!",
-                "type" => "success"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('settings');
+            toastMessageWithRedirectURI("İşlem Başarılı", "Kullanıcı aktif/deaktif edildi!", "settings");
         } else {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Kullanıcı aktif/deaktif edilemedi!",
-                "type" => "error"
-            );
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect('settings');
+            toastMessageWithRedirectURI("İşlem Başarısız", "Kullanıcı aktif/deaktif edilemedi!", "settings", "error");
         }
     }
 
